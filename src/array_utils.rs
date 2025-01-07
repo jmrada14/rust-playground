@@ -1,5 +1,4 @@
 extern crate rand;
-extern crate rayon;
 
 use rand::distributions::Alphanumeric;
 use rand::{thread_rng, Rng};
