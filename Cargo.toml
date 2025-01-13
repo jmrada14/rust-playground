@@ -6,3 +6,10 @@ edition = "2021"
 [dependencies]
 rand = "0.8.5"
 rayon = "1.10.0"
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+target-cpu = "native"
+panic = "abort"

@@ -84,7 +84,7 @@ mod tests {
 
 const ARRAY_SIZE: usize = 1_000_000;
 const ARRAY_COUNT: usize = 100;
-fn main() {
+fn test_sort_arrays_by_first_array() {
     println!("Generating arrays...");
     let start = Instant::now();
     let int_arrays: Vec<Vec<i32>> = (0..ARRAY_COUNT)
@@ -99,4 +99,8 @@ fn main() {
     let _sorted_int_arrays = sort_arrays_by_first_array(&int_arrays[0], &int_arrays);
     let duration_int_sort = start_int_sort.elapsed();
     println!("Time taken to sort integer arrays: {:?}", duration_int_sort);
+}
+
+fn main() {
+    test_sort_arrays_by_first_array();
 }
