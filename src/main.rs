@@ -16,7 +16,10 @@ pub mod array_utils;
 ///
 /// # Returns
 /// Returns a new Vec containing the reordered arrays
+/// # Performance
+/// Uses parallel sorting and iteration for improved performance on large datasets.
 ///
+
 fn sort_arrays_by_first_array<T: Ord + Sync, U: Sync + Copy + Send>(
     first_array: &[T],
     arrays: &[Vec<U>],
