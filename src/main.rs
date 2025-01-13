@@ -1,6 +1,5 @@
 extern crate rand;
 extern crate rayon;
-use rand::{thread_rng, Rng};
 use rayon::prelude::*;
 use std::time::Instant;
 pub mod array_utils;
@@ -30,6 +29,53 @@ fn sort_arrays_by_first_array<T: Ord + Sync, U: Sync + Copy + Send>(
         .map(|array| indices.iter().map(|&idx| array[idx]).collect())
         .collect()
 }
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_sort_arrays_by_first_array() {
+        // Test case 1: Basic integer sorting
+        let first = vec![3, 1, 4, 2];
+        let arrays = vec![
+            vec![3, 1, 4, 2],
+            vec![30, 10, 40, 20],
+            vec![300, 100, 400, 200],
+        ];
+        let expected = vec![
+            vec![1, 2, 3, 4],
+            vec![10, 20, 30, 40],
+            vec![100, 200, 300, 400],
+        ];
+        assert_eq!(sort_arrays_by_first_array(&first, &arrays), expected);
+
+        // Test case 2: Empty arrays
+        let empty: Vec<i32> = vec![];
+        let empty_arrays: Vec<Vec<i32>> = vec![vec![]];
+        assert_eq!(
+            sort_arrays_by_first_array(&empty, &empty_arrays),
+            vec![vec![]]
+        );
+
+        // Test case 3: Single element arrays
+        let single = vec![1];
+        let single_arrays = vec![vec![1], vec![10]];
+        assert_eq!(
+            sort_arrays_by_first_array(&single, &single_arrays),
+            single_arrays
+        );
+
+        // Test case 4: Arrays with duplicate values
+        let duplicates = vec![2, 1, 2, 1];
+        let dup_arrays = vec![vec![2, 1, 2, 1], vec![20, 10, 20, 10]];
+        let expected_dups = vec![vec![1, 1, 2, 2], vec![10, 10, 20, 20]];
+        assert_eq!(
+            sort_arrays_by_first_array(&duplicates, &dup_arrays),
+            expected_dups
+        );
+    }
+}
+
 const ARRAY_SIZE: usize = 1_000_000;
 const ARRAY_COUNT: usize = 1000;
 fn main() {
